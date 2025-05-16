@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queen of Tears - Episode Playlist</title>
+    <style>
+        /* Basic CSS for layout and styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .episode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjusted column width */
+            gap: 25px;
+            max-width: 900px; /* Adjusted max width for better appearance with 2 items */
+            margin: 0 auto;
+        }
+        .episode-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .episode-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .episode-item img {
+            width: 100%;
+            height: 180px; /* Adjusted height for the banner */
+            object-fit: cover;
+            display: block;
+            border-bottom: 1px solid #eee;
+        }
+        .episode-item p {
+            padding: 15px;
+            margin: 0;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #444;
+        }
+        .video-player-container {
+            margin-top: 40px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        video {
+            width: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Queen of Tears: Episode Player</h1>
+
+    <div class="video-player-container">
+        <video id="episodePlayer" controls autoplay>
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    ---
+
+    <h2>Available Episodes</h2>
+    <div class="episode-grid">
+        </div>
+
+    <script>
+        const episodeData = [
+            {
+                name: "Queen of Tears: Episode 16",
+                banner: "queen_of_tears_banner.jpg", // Path to your banner image
+                videoUrl: "https://link.anshbotzone.com/77777/Queen.of.Tears.S01E16.2024.480p.x264.WEB-DL.Hindi.Englis.mkv?hash=2e5114"
+            },
+            {
+                name: "Queen of Tears: Episode 17 (or Dr. Stone E7)",
+                banner: "queen_of_tears_banner.jpg",
+                videoUrl: "https://link.anshbotzone.com/77779/%5BMAHESH+KADALI%5D.DR.STONE.E7.%5B15-05-2025%5D.360p.TPLAY.WEB-.mkv?hash=564033"
+            }
+        ];
+
+        const episodeGrid = document.querySelector('.episode-grid');
+        const episodePlayer = document.getElementById('episodePlayer');
+
+        // Function to load and play an episode
+        function playEpisode(videoUrl) {
+            episodePlayer.src = videoUrl;
+            episodePlayer.load(); // Load the new video source
+            episodePlayer.play(); // Start playing
+        }
+
+        // Generate episode banners dynamically
+        episodeData.forEach(episode => {
+            const episodeItem = document.createElement('div');
+            episodeItem.classList.add('episode-item');
+
+            const img = document.createElement('img');
+            img.src = episode.banner;
+            img.alt = episode.name;
+
+            const p = document.createElement('p');
+            p.textContent = episode.name;
+
+            episodeItem.appendChild(img);
+            episodeItem.appendChild(p);
+
+            // Add click event listener to play the episode
+            episodeItem.addEventListener('click', () => {
+                playEpisode(episode.videoUrl);
+            });
+
+            episodeGrid.appendChild(episodeItem);
+        });
+
+        // Play the first episode when the page loads
+        if (episodeData.length > 0) {
+            playEpisode(episodeData[0].videoUrl);
+        }
+
+    </script>
+</body>
+</html>
