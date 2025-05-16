@@ -15,44 +15,29 @@
             flex-direction: column;
             align-items: center; /* Center content horizontally */
         }
-        h1, h2 {
+        h1 {
             text-align: center;
             color: #2c3e50;
             margin-bottom: 30px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+            font-size: 2.5em; /* Larger heading for the main title */
         }
 
-        .video-player-container {
-            width: 100%;
-            max-width: 960px; /* Adjusted max width for better video display */
-            margin-bottom: 50px; /* Space between player and episodes */
-            background-color: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-            display: flex; /* Use flex to center video if needed */
-            justify-content: center;
-            align-items: center;
-        }
-        video {
-            width: 100%;
-            display: block;
-            /* To remove context menu (including download option) if supported by browser/OS */
-            /* However, this also removes default right-click options like "Picture-in-Picture" */
-            /* context-menu: none; */
-        }
-
-        /* --- Episode Grid Styling --- */
-        .episode-grid {
+        /* Container for the episode grid */
+        #episodeGridContainer {
             width: 100%;
             max-width: 980px; /* Wider to accommodate 4 columns with spacing */
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 columns per row */
-            gap: 25px; /* Spacing between episode items */
             padding: 20px;
             background-color: #ffffff;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Episode Grid Styling --- */
+        .episode-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columns per row */
+            gap: 25px; /* Spacing between episode items */
         }
 
         .episode-item {
@@ -103,42 +88,83 @@
             line-height: 1.3;
         }
 
+        /* --- Video Player Styling --- */
+        #videoPlayerContainer {
+            width: 100%;
+            max-width: 960px; /* Max width for video player */
+            margin-bottom: 20px; /* Space above back button */
+            background-color: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            align-items: center;
+        }
+        #videoPlayerContainer video {
+            width: 100%;
+            display: block;
+        }
+
+        .back-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
         /* Responsive adjustments */
         @media (max-width: 1024px) {
             .episode-grid {
                 grid-template-columns: repeat(3, 1fr); /* 3 columns on medium screens */
-                max-width: 750px;
+            }
+            #episodeGridContainer, #videoPlayerContainer {
+                 max-width: 750px;
             }
         }
 
         @media (max-width: 768px) {
             .episode-grid {
                 grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
-                max-width: 500px;
-                gap: 20px;
             }
-            .video-player-container, .episode-grid {
+            #episodeGridContainer, #videoPlayerContainer {
+                max-width: 500px;
                 margin-left: 10px;
                 margin-right: 10px;
             }
-            h1, h2 {
-                font-size: 1.8em;
+            h1 {
+                font-size: 2em;
             }
         }
 
         @media (max-width: 480px) {
             .episode-grid {
                 grid-template-columns: 1fr; /* 1 column on small phones */
+            }
+            #episodeGridContainer, #videoPlayerContainer {
                 max-width: 300px;
-                gap: 15px;
+                margin-left: 5px;
+                margin-right: 5px;
             }
             body {
                 padding: 10px;
             }
-            h1, h2 {
-                font-size: 1.5em;
+            h1 {
+                font-size: 1.8em;
             }
             .episode-item p {
+                font-size: 0.9em;
+            }
+            .back-button {
+                padding: 8px 15px;
                 font-size: 0.9em;
             }
         }
@@ -146,55 +172,86 @@
 </head>
 <body>
 
-    <h1>Queen of Tears: Episode Player</h1>
+    <h1>Queen of Tears</h1>
 
-    <div class="video-player-container">
-        <video id="episodePlayer" controls autoplay>
-            Your browser does not support the video tag.
-        </video>
+    <div id="videoPlayerContainer">
+        <video id="episodePlayer" controls autoplay></video>
+        <button class="back-button" onclick="showEpisodes()">Back to Episodes</button>
     </div>
 
-    ---
-
-    <h2>Available Episodes</h2>
-    <div class="episode-grid">
-        </div>
+    <div id="episodeGridContainer">
+        <div class="episode-grid">
+            </div>
+    </div>
 
     <script>
         const episodeData = [
             {
-                name: "Queen of Tears: Episode 16",
+                name: "Episode 16: The Grand Finale",
                 banner: "queen_of_tears_banner.jpg", // Path to your banner image
                 videoUrl: "https://link.anshbotzone.com/77777/Queen.of.Tears.S01E16.2024.480p.x264.WEB-DL.Hindi.Englis.mkv?hash=2e5114"
             },
             {
-                name: "Queen of Tears: Episode 17 (or Dr. Stone E7)",
+                name: "Episode 17: (Dr. Stone E7 Sample)", // Clarified placeholder
                 banner: "queen_of_tears_banner.jpg",
                 videoUrl: "https://link.anshbotzone.com/77779/%5BMAHESH+KADALI%5D.DR.STONE.E7.%5B15-05-2025%5D.360p.TPLAY.WEB-.mkv?hash=564033"
             },
-            // Add more episodes here following the same structure
-            // Example for placeholder episodes to show 4-column layout:
+            // Add more episodes here to fill out the grid
             {
-                name: "Queen of Tears: Bonus Clip 1",
+                name: "Episode 15: The Turning Point",
                 banner: "queen_of_tears_banner.jpg",
                 videoUrl: "https://link.anshbotzone.com/77777/Queen.of.Tears.S01E16.2024.480p.x264.WEB-DL.Hindi.Englis.mkv?hash=2e5114" // Placeholder link
             },
             {
-                name: "Queen of Tears: Bonus Clip 2",
+                name: "Episode 14: Confrontation",
+                banner: "queen_of_tears_banner.jpg",
+                videoUrl: "https://link.anshbotzone.com/77779/%5BMAHESH+KADALI%5D.DR.STONE.E7.%5B15-05-2025%5D.360p.TPLAY.WEB-.mkv?hash=564033" // Placeholder link
+            },
+            {
+                name: "Episode 13: Secrets Revealed",
+                banner: "queen_of_tears_banner.jpg",
+                videoUrl: "https://link.anshbotzone.com/77777/Queen.of.Tears.S01E16.2024.480p.x264.WEB-DL.Hindi.Englis.mkv?hash=2e5114" // Placeholder link
+            },
+            {
+                name: "Episode 12: A Glimmer of Hope",
                 banner: "queen_of_tears_banner.jpg",
                 videoUrl: "https://link.anshbotzone.com/77779/%5BMAHESH+KADALI%5D.DR.STONE.E7.%5B15-05-2025%5D.360p.TPLAY.WEB-.mkv?hash=564033" // Placeholder link
             }
+            // ... add all your 30 episodes here
         ];
 
-        const episodeGrid = document.querySelector('.episode-grid');
+        const episodeGridContainer = document.getElementById('episodeGridContainer');
+        const videoPlayerContainer = document.getElementById('videoPlayerContainer');
         const episodePlayer = document.getElementById('episodePlayer');
+        const episodeGrid = episodeGridContainer.querySelector('.episode-grid'); // Select the actual grid inside its container
 
-        function playEpisode(videoUrl) {
-            episodePlayer.src = videoUrl;
-            episodePlayer.load();
-            episodePlayer.play();
+        // Function to show the video player and hide the episode grid
+        function showPlayer() {
+            episodeGridContainer.style.display = 'none';
+            videoPlayerContainer.style.display = 'flex'; // Use flex for centering content inside
+            episodePlayer.focus(); // Give focus to player for better accessibility
+            // Scroll to the top of the page (or the player) after showing
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // Function to show the episode grid and hide the video player
+        function showEpisodes() {
+            episodePlayer.pause(); // Pause video when returning to grid
+            episodeGridContainer.style.display = 'block';
+            videoPlayerContainer.style.display = 'none';
+            // Scroll to the top of the page when returning to grid
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Function to load and play an episode
+        function playEpisode(videoUrl) {
+            episodePlayer.src = videoUrl;
+            episodePlayer.load(); // Load the new video source
+            episodePlayer.play(); // Start playing
+            showPlayer(); // Show the player after starting playback
+        }
+
+        // Generate episode banners dynamically
         episodeData.forEach(episode => {
             const episodeItem = document.createElement('div');
             episodeItem.classList.add('episode-item');
@@ -214,20 +271,16 @@
             episodeItem.appendChild(imageWrapper);
             episodeItem.appendChild(p);
 
+            // Add click event listener to play the episode
             episodeItem.addEventListener('click', () => {
                 playEpisode(episode.videoUrl);
-                // Optionally scroll to the video player when an episode is clicked
-                episodePlayer.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
 
             episodeGrid.appendChild(episodeItem);
         });
 
-        // Play the first episode when the page loads
-        if (episodeData.length > 0) {
-            playEpisode(episodeData[0].videoUrl);
-        }
-
+        // Initially show the episode grid when the page loads
+        showEpisodes(); // Ensures only the grid is visible on initial load
     </script>
 </body>
 </html>
